@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Restaurant:</strong>
+  <%= @lunch.restaurant %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @lunch.date %>
+</p>
+
+<h2>
+  Options on the Menu
+</h2>
+
+<%= form_for([@lunch, @lunch.orders.build]) do |f| %>
+  
+  <% @options.each do |option| %>
+    <p>
+       <%= f.radio_button :order, option.id %> <%= option.option %> - <em><%=  option.description %></em>
+    </p>
+  <% end %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %> 
+  </p>
+  
+  <div class="actions">
+    <%= f.submit :Order %>
+  </div>
+  
+<% end %>
+
+<h2>Stats</h2>
+<% @orders_count.each do |option, orders| %>
+    <p>
+        <%= option.option %>: <%= orders.count %>
+    </p>
+<% end %>
+
+<h2>
+  Add an option to the menu <small> - this bit is for Sophie</small>
+</h2>
+
+<%= form_for([@lunch, @lunch.options.build]) do |f| %>
+
+  <div class="field">
+    <%= f.label :option %><br>
+    <%= f.text_field :option %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_lunch_path(@lunch) %> |
+<%= link_to 'Back', lunches_path %>
